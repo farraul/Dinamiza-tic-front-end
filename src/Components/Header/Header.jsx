@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Boton from '../Boton/Boton';
-import logo from '../../images/logo.png'
+import logo from '../../images/logo.png';
+import './Header.scss'
 
 
 
@@ -14,12 +15,14 @@ const Header = () => {
     }
 
     return(
-        <div className="designHeader">
+        <div className="Header">
             <div>
                 <img className="logo" src={logo} alt="logo" onClick={()=>llevame()} />
             </div>
             <div className="menu">
                 <Boton destino="Home" url="/"/>
+                <Boton destino="Registrar usuario" url="/regristrar-usuario"/>
+                <Boton destino="Ver registros" url="/ver-registros"/>
                {/* <Boton destino="Films" url="/films"/>
 
                 { props.data_user?.user?._id ? <Boton destino="Perfil" url="/profile"/>: null}

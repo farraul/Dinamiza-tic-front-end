@@ -1,7 +1,6 @@
 
 
 .designBoton {
-
     height: 2.3em;
     display: flex;
     width: fit-content;
@@ -13,4 +12,8 @@
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
+}
+
+.designBoton {
+    padding: 0em 1em;
 }
