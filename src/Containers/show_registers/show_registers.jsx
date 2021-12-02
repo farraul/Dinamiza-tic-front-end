@@ -44,10 +44,34 @@ const ShowUsers = () => {
             addcurrent_page = current_page + 1;
             addcurrent_index = current_index + 2;
 
+            console.log("addcurrent_+++age: ",addcurrent_page);
+            console.log("addcurrent_++++index: ",addcurrent_index);
+    
+
             setcurrent_index(addcurrent_index);
             setcurrent_page(addcurrent_page);
 
             const result_data = users.filter((user, index) => {
+                if (index > current_index - 2 && index <= current_index) {
+                    return user
+                }
+            }); 
+            setresult(result_data);
+        }
+    }
+
+
+    const reducepage = () => {
+        addcurrent_page = current_page - 1;
+        addcurrent_index = current_index - 2;
+        console.log("addcurrent_----page: ",addcurrent_page);
+        console.log("addcurrent_-----index: ",addcurrent_index);
+
+        if (current_page >= 0) {
+            setcurrent_index(addcurrent_index);
+            setcurrent_page(addcurrent_page);
+            const result_data = users.filter((user, index) => {
+
                 if (index > current_index - 2 && index <= current_index) {
                     return user
                 }
@@ -56,7 +80,9 @@ const ShowUsers = () => {
         }
     }
 
-     const userHandler = (e) => {
+
+    
+    const userHandler = (e) => {
         setusers_update({ ...users_update, [e.target.name]: e.target.value });
     }
 
@@ -76,23 +102,6 @@ const ShowUsers = () => {
         }
     }
 
-
-    const reducepage = () => {
-        addcurrent_page = current_page - 1;
-        addcurrent_index = current_index - 2;
-
-        if (current_page >= 0) {
-            setcurrent_index(addcurrent_index);
-            setcurrent_page(addcurrent_page);
-            const result_data = users.filter((user, index) => {
-
-                if (index > current_index - 2 && index <= current_index) {
-                    return user
-                }
-            });
-            setresult(result_data);
-        }
-    }
 
     const deleteuser = async (data) => {
         try {
@@ -159,9 +168,12 @@ const ShowUsers = () => {
             <button className="buton-more-and-less-inside" onClick={() => reducepage()}>
                 ←
             </button>
+          
             <button className="buton-more-and-less-inside" onClick={() => addpage()}>
-                →
+            →
             </button>
+            
+            
             <div>
                 {userdelete}
             </div>

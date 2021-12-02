@@ -63,14 +63,14 @@ const Home = () => {
 
                             {userfounds?.map(run => {
                                 return (
-                                    <div className="div-table-show-row">
-                                        <div className="div-table-show-search" key={run.id}>
+                                    <div className="div-table-show-row"key={run.id}>
+                                        <div className="div-table-show-search">
                                             {run.id}
                                         </div>
-                                        <div className="div-table-show-search" key={run.id}>
+                                        <div className="div-table-show-search">
                                             {run.name}
                                         </div>
-                                        <div className="div-table-show-search" key={run.id}>
+                                        <div className="div-table-show-search">
                                             {run.createdAt}
                                         </div>
                                     </div>
