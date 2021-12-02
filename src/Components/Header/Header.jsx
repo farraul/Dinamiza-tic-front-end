@@ -22,7 +22,7 @@ const Header = () => {
             <div className="menu">
                 <Boton destino="Home" url="/"/>
                 <Boton destino="Registrar usuario" url="/regristrar-usuario"/>
-                <Boton destino="Ver registros" url="/ver-registros"/>
+                <Boton destino="Ver usuarios" url="/ver-registros"/>
                {/* <Boton destino="Films" url="/films"/>
 
                 { props.data_user?.user?._id ? <Boton destino="Perfil" url="/profile"/>: null}

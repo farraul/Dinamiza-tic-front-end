@@ -1,2 +1,24 @@
-
-
+div#container-form {
+    width: 100%;
+    max-width: 22em;
+    margin: auto;
+}
+input.input-form-register {
+    width: 100%;
+    height: 3em;
+    border-radius: 3em;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 1.1em;
+}
+button.button-register {
+    width: 100%;
+    margin-top: 2em;
+    height: 4em;
+    border-radius: 5em;
+    background-color: #009cff;
+    border: unset;
+    box-shadow: 1px 1px black;
+    font-size: 1em;
+    color: white;
+}

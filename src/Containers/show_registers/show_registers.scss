@@ -1,34 +1,37 @@
 .show-register-table {
 display: flex;
-width: 26em;
+width: 38em;
 background-color: #aedeea;
 margin: auto;
 }
 .show-register-table {
     border: 1px solid white;
 }
-.w-2{
-width: 2em;
+
+
+
+.sendButton-no-ready {
+    height: 3em;
+    width: 100%;
+    background-color: rgb(58, 58, 58);
+    color: white;
+    border-radius: 0.2em;
+    display: flex;
+    margin-top: 2em;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 30px;
+    cursor: no-drop;
+    margin-bottom: 8em;
 }
-.w-3{
-width: 2em;
+button.deleteButton {
+    background-color: red;
+    border: unset;
+    border-radius: 6em;
+    color: white;
+    width: 12em;
+    margin-top: 0.3em;
 }
 
-.w-3{
-width: 3em;
-}
-.w-4{
-width: 4em;
-}
-.w-5{
-width: 5em;
-}
-.w-6{
-width: 6em;
-}
-.w-7{
-width: 7em;
-}
-.w-16{
-width: 16em;
-}

@@ -2,6 +2,50 @@
 @import 'Components/Boton/Boton.scss';
 @import 'Components/Footer/Footer.scss';
 
+@import 'Containers/add_register/add_register.scss';
+@import 'Containers/Home/Home.scss';
+@import 'Containers/show_registers/show_registers.scss';
 
-html,body,#root {  height: 100%;  margin: 0; background-color: black;}
+
+html,body,#root {  height: 100%;  margin: 0;}
 h1{color:white;}
+
+
+.w-2{
+    width: 2em;
+    }
+    .w-3{
+    width: 2em;
+    }
+    
+    .w-3{
+    width: 3em;
+    }
+    .w-4{
+    width: 4em;
+    }
+    .w-5{
+    width: 5em;
+    }
+    .w-6{
+    width: 6em;
+    }
+    .w-7{
+    width: 7em;
+    }
+    .w-8{
+        width: 7em;
+        }
+    .w-16{
+    width: 16em;
+    }
+
+    .mt-4{
+        margin-top:4em;
+    }
+    .mt-5{
+        margin-top:5em;
+    }
+    .mt-6{
+        margin-top:6em;
+    }
