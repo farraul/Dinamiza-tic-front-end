@@ -5,13 +5,10 @@ import './show_registers.scss';
 
 
 const ShowUsers = () => {
-    const history = useNavigate();
-
 
     const [current_index, setcurrent_index] = useState(-1);
     const [current_page, setcurrent_page] = useState(0);
     const [users_update, setusers_update] = useState({
-
         name: '',
         id: ''
     });
@@ -20,6 +17,7 @@ const ShowUsers = () => {
     const [result, setresult] = useState([]);
     const [max_pages, set_maxpages] = useState([]);
     const [userdelete, setuserdelete] = useState([]);
+    const [user_update_message, setuser_update_message] = useState([]);
 
     let addcurrent_index = -1;
     let addcurrent_page = 0;
@@ -35,7 +33,7 @@ const ShowUsers = () => {
 
     useEffect(() => {
         const length_users = users.length;
-        set_maxpages(Math.ceil(length_users / 2))// númnero máximo de páginas a mostrar, redondea a la alta el ceil
+        set_maxpages(Math.ceil(length_users / 2))
         addpage();
     }, [users]);
 
@@ -44,10 +42,6 @@ const ShowUsers = () => {
             addcurrent_page = current_page + 1;
             addcurrent_index = current_index + 2;
 
-            console.log("addcurrent_+++age: ",addcurrent_page);
-            console.log("addcurrent_++++index: ",addcurrent_index);
-    
-
             setcurrent_index(addcurrent_index);
             setcurrent_page(addcurrent_page);
 
@@ -55,7 +49,7 @@ const ShowUsers = () => {
                 if (index > current_index - 2 && index <= current_index) {
                     return user
                 }
-            }); 
+            });
             setresult(result_data);
         }
     }
@@ -64,8 +58,6 @@ const ShowUsers = () => {
     const reducepage = () => {
         addcurrent_page = current_page - 1;
         addcurrent_index = current_index - 2;
-        console.log("addcurrent_----page: ",addcurrent_page);
-        console.log("addcurrent_-----index: ",addcurrent_index);
 
         if (current_page >= 0) {
             setcurrent_index(addcurrent_index);
@@ -80,12 +72,9 @@ const ShowUsers = () => {
         }
     }
 
-
-    
     const userHandler = (e) => {
         setusers_update({ ...users_update, [e.target.name]: e.target.value });
     }
-
 
     const send_data_update_user = async () => {
         let body = {
@@ -94,14 +83,13 @@ const ShowUsers = () => {
         }
 
         try {
-            let res = await axios.put(`https://dynamiza-back-end.herokuapp.com/users/${users_update.id}`,body);
-
+            let res = await axios.put(`https://dynamiza-back-end.herokuapp.com/users/${users_update.id}`, body);
+            setuser_update_message("Nombre de usuario actualizado, recarga la página para comprobarlo");
 
         } catch (error) {
             console.log(error)
         }
     }
-
 
     const deleteuser = async (data) => {
         try {
@@ -112,11 +100,9 @@ const ShowUsers = () => {
         }
     }
 
-
     return (
-
         <div>
-            <p> Usuarios registrados</p>
+            <h2>Datos usuarios</h2>
 
             <div className="show-register-table">
                 <div className="structure-table-v w-3">
@@ -158,40 +144,35 @@ const ShowUsers = () => {
                         <div className="structure-table-v">
                             <button className="deleteButton colum-components-admin-print-register w-9" onClick={() => deleteuser(run.id)} ><p>Borrar usuario</p></button>
                         </div>
-
-
                     </div>
                 )
             })}
 
             <div className="buttons-less-and-more">
-            <button className="buton-more-and-less-inside" onClick={() => reducepage()}>
-                ←
-            </button>
-          
-            <button className="buton-more-and-less-inside" onClick={() => addpage()}>
-            →
-            </button>
-            
-            
-            <div>
-                {userdelete}
-            </div>
+                <button className="buton-more-and-less-inside" onClick={() => reducepage()}>
+                    ←
+                </button>
+
+                <button className="buton-more-and-less-inside" onClick={() => addpage()}>
+                    →
+                </button>
+                <div>
+                    {userdelete}
+                </div>
             </div>
 
             <div className="update-data">
-
-            <div id="container-form-show">
-                <div className="container-form-2fields mt-6">
-                    <div className="input-form-register-fields">
-                        <input className="input-form-register" type='text' name='id' title='id' lenght='30' onChange={e => userHandler(e)} placeholder='Escribe la ID del usuario que quieres actualizar' />
-                        <input className="input-form-register" type='text' name='name' title='name' lenght='30' onChange={e => userHandler(e)} placeholder='Como lo quieres llamar ahora' />
-
+                <div id="container-form-show">
+                    <div className="container-form-2fields mt-6">
+                        <div className="input-form-register-fields">
+                            <h2>Modificar datos</h2>
+                            <input className="input-form-register" type='text' name='id' title='id' lenght='30' onChange={e => userHandler(e)} placeholder='Escribe la ID del usuario que quieres actualizar' />
+                            <input className="input-form-register" type='text' name='name' title='name' lenght='30' onChange={e => userHandler(e)} placeholder='Como lo quieres llamar ahora' />
+                        </div>
                     </div>
+                    <button className="button-register" onClick={() => send_data_update_user()}>Cambiar nombre de usuario</button>
+                    <p className="message-user-update">{user_update_message}</p>
                 </div>
-                <button className="button-register" onClick={() => send_data_update_user()}>Cambiar nombre de usuario</button>
-            </div>
-
             </div>
         </div>
     )

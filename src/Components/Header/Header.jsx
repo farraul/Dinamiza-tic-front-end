@@ -4,10 +4,6 @@ import Boton from '../Boton/Boton';
 import logo from '../../images/logo.png';
 import './Header.scss'
 
-
-
-
-
 const Header = () => {
     const history = useNavigate();
     const llevame = () => {

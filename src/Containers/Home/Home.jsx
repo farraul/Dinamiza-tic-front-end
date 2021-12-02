@@ -13,23 +13,19 @@ const Home = () => {
         take_registers();
     }, []);
 
-
     const take_registers = async () => {
         let res = await axios.get("https://dynamiza-back-end.herokuapp.com/users/");
         setusers(res.data);
     };
 
-
     const writeuser = (e) => {
 
         if (e.target.value != "") {
-            console.log("entro: ", e.target.value);
-
             filtered = users.filter(word => {
                 console.log("word: ", word);
                 return word.name.toLowerCase().match(e.target.value.toLowerCase());
             })
-            
+
             setuserfounds(filtered);
             console.log("userfounds.length", userfounds.length)
         } else {
@@ -39,7 +35,7 @@ const Home = () => {
 
     return (
         <div>
-
+            <h1 className="mt-4">Buscador</h1>
             <input className="imput-search" type="text" name="film" onChange={writeuser} title="film" lenght="30" placeholder="Buscar usuario por nombre" />
 
             {userfounds != "" ?
@@ -63,7 +59,7 @@ const Home = () => {
 
                             {userfounds?.map(run => {
                                 return (
-                                    <div className="div-table-show-row"key={run.id}>
+                                    <div className="div-table-show-row" key={run.id}>
                                         <div className="div-table-show-search">
                                             {run.id}
                                         </div>
@@ -80,7 +76,7 @@ const Home = () => {
                     </div>
 
                 </div>
-            : <p className="no-data">No hay datos con esta búsqueda</p>
+                : <p className="no-data">No hay datos con esta búsqueda</p>
             }
         </div>
     )
