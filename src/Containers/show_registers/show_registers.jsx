@@ -4,92 +4,104 @@ import { useNavigate } from 'react-router-dom';
 import './show_registers.scss';
 
 
-
-
-
-
 const ShowUsers = () => {
     const history = useNavigate();
 
 
-    const max_fields_per_page = 2;
-    let current_index = -1; //indice del array máximo
-    let current_page = 0;
+    const [current_index, setcurrent_index] = useState(-1);
+    const [current_page, setcurrent_page] = useState(0);
+    const [users_update, setusers_update] = useState({
+
+        name: '',
+        id: ''
+    });
 
     const [users, setusers] = useState([""]);
-    const [result, setresult]=useState([]);
+    const [result, setresult] = useState([]);
+    const [max_pages, set_maxpages] = useState([]);
+    const [userdelete, setuserdelete] = useState([]);
 
-    const [userdelete, setuserdelete]=useState([]);
-  
-
-
-
+    let addcurrent_index = -1;
+    let addcurrent_page = 0;
 
     useEffect(() => {
         take_registers();
-
     }, []);
 
-
-   
-
     const take_registers = async () => {
-        let res = await axios.get("https://dynamiza-back-end.herokuapp.com/movies/");
+        let res = await axios.get("https://dynamiza-back-end.herokuapp.com/users/");
         setusers(res.data);
     };
 
-
-
     useEffect(() => {
-      
         const length_users = users.length;
-        const max_pages = Math.ceil(length_users / max_fields_per_page);// númnero máximo de páginas a mostrar, redondea a la alta el ceil
+        set_maxpages(Math.ceil(length_users / 2))// númnero máximo de páginas a mostrar, redondea a la alta el ceil
         addpage();
-
-     
-
     }, [users]);
 
+    const addpage = () => {
+        if (current_page <= max_pages) {
+            addcurrent_page = current_page + 1;
+            addcurrent_index = current_index + 2;
+
+            setcurrent_index(addcurrent_index);
+            setcurrent_page(addcurrent_page);
+
+            const result_data = users.filter((user, index) => {
+                if (index > current_index - 2 && index <= current_index) {
+                    return user
+                }
+            });
+            setresult(result_data);
+        }
+    }
+
+     const userHandler = (e) => {
+        setusers_update({ ...users_update, [e.target.name]: e.target.value });
+    }
 
 
-   const addpage = () => {
-     
-        current_page +=1;
-        current_index += max_fields_per_page;
-        console.log("current_index",current_index);
-        console.log("currenpage: ",current_page);
+    const send_data_update_user = async () => {
+        let body = {
+            name: users_update.name,
+            id: users_update.id,
+        }
+
+        try {
+            let res = await axios.put(`https://dynamiza-back-end.herokuapp.com/users/${users_update.id}`,body);
 
 
-        const result_data = users.filter((user, index) => {
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-            if ( index > current_index - max_fields_per_page && index <= current_index) {
-                return user
-            }
-        });
-        setresult(result_data);
+
+    const reducepage = () => {
+        addcurrent_page = current_page - 1;
+        addcurrent_index = current_index - 2;
+
+        if (current_page >= 0) {
+            setcurrent_index(addcurrent_index);
+            setcurrent_page(addcurrent_page);
+            const result_data = users.filter((user, index) => {
+
+                if (index > current_index - 2 && index <= current_index) {
+                    return user
+                }
+            });
+            setresult(result_data);
+        }
     }
 
     const deleteuser = async (data) => {
-       /* let body = {
-            id: user.id,
-        }*/
-        //Conexion a axios y envio de datos
-        //console.log("ENVIANDO AL BACKEND ESTO....", body);
-
         try {
-            let res = await axios.delete(`https://dynamiza-back-end.herokuapp.com/movies/${data}`);
-
-            
-            console.log("dentro del try,orrado", res);
-            
+            let res = await axios.delete(`https://dynamiza-back-end.herokuapp.com/users/${data}`);
             setuserdelete("Usuario borrado, recarga la página para comprobarlo");
-       
-
         } catch (error) {
             console.log("error de front", error);
         }
     }
-
 
 
     return (
@@ -118,24 +130,24 @@ const ShowUsers = () => {
 
             {result?.map(run => {
                 return (
-                    <div className="show-register-table">
+                    <div className="show-register-table" key={`id-${run.id}`}>
                         <div className="structure-table-v w-3">
-                            <p className="colum-components-admin-print-register" key={`id-${run.id}`}>
+                            <p className="colum-components-admin-print-register">
                                 {run.id}
                             </p>
                         </div>
                         <div className="structure-table-v w-7">
-                            <p className="colum-components-admin-print-register" key={`title-${run.id}`}>
-                                {run.title}
+                            <p className="colum-components-admin-print-register">
+                                {run.name}
                             </p>
                         </div>
                         <div className="structure-table-v">
-                            <p className="colum-components-admin-print-register w-16" key={`createdAt-${run.id}`}>
+                            <p className="colum-components-admin-print-register w-16" >
                                 {run.createdAt}
                             </p>
                         </div>
                         <div className="structure-table-v">
-                            <button className="deleteButton colum-components-admin-print-register w-9" onClick={() => deleteuser(run.id)}><p>Borrar usuario</p></button>
+                            <button className="deleteButton colum-components-admin-print-register w-9" onClick={() => deleteuser(run.id)} ><p>Borrar usuario</p></button>
                         </div>
 
 
@@ -143,18 +155,34 @@ const ShowUsers = () => {
                 )
             })}
 
-            <button onClick={ () => addpage()}>
-                +
-        </button>
+            <div className="buttons-less-and-more">
+            <button className="buton-more-and-less-inside" onClick={() => reducepage()}>
+                ←
+            </button>
+            <button className="buton-more-and-less-inside" onClick={() => addpage()}>
+                →
+            </button>
+            <div>
+                {userdelete}
+            </div>
+            </div>
 
-        <div>
-            {userdelete}
-        </div>
+            <div className="update-data">
+
+            <div id="container-form-show">
+                <div className="container-form-2fields mt-6">
+                    <div className="input-form-register-fields">
+                        <input className="input-form-register" type='text' name='id' title='id' lenght='30' onChange={e => userHandler(e)} placeholder='Escribe la ID del usuario que quieres actualizar' />
+                        <input className="input-form-register" type='text' name='name' title='name' lenght='30' onChange={e => userHandler(e)} placeholder='Como lo quieres llamar ahora' />
+
+                    </div>
+                </div>
+                <button className="button-register" onClick={() => send_data_update_user()}>Cambiar nombre de usuario</button>
+            </div>
+
+            </div>
         </div>
     )
-
-
-
 }
 
 

@@ -1,15 +1,12 @@
 .show-register-table {
-display: flex;
-width: 38em;
-background-color: #aedeea;
-margin: auto;
+    display: flex;
+    width: 38em;
+    background-color: #aedeea;
+    margin: auto;
 }
 .show-register-table {
     border: 1px solid white;
 }
-
-
-
 .sendButton-no-ready {
     height: 3em;
     width: 100%;
@@ -27,11 +24,34 @@ margin: auto;
     margin-bottom: 8em;
 }
 button.deleteButton {
-    background-color: red;
+    background-color: #009cff;
     border: unset;
     border-radius: 6em;
     color: white;
     width: 12em;
     margin-top: 0.3em;
 }
+button.buton-more-and-less-inside {
+    height: 3em;
+    width: 50%;
+    background-color: #009cff;
+    color: white;
+    border: 1px solid white;
+}
+
+.buttons-less-and-more {
+    width: 38em;
+    margin: auto;
+    margin-top: 2em;
+}
+
+div#container-form-show {
+    width: 100%;
+    max-width: 27em;
+    margin: auto;
+}
+input.input-form-register {
+    margin-top: 1em;
+}
+
 

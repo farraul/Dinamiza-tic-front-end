@@ -15,7 +15,6 @@ const Boton = (props) => {
 
     return (
         <div className="designBoton" onClick={()=>gototheurl()}>{props.destino}</div>
-        
     )
 };
 
